@@ -1,0 +1,7 @@
+1. Use the flight data from Interpretation Challenges I For the classification (not delayed: 0, delayed: 1) use a decision tree Plot the decision tree in a graphical form with a depth of 3 Plot the decision tree in text form Compare both results 
+2. What are advantages and disadvantages of Explainable Boosting Machines?
+3. Train a EBM using only a part of the features and data 
+4. Explain the feature importance and the interactions globally 
+5. Plot ROC and explain it globally 
+6. Plot Scope Rules and explain them 
+7. Explain the feature importance and the interactions of two features locally for a special dataset
