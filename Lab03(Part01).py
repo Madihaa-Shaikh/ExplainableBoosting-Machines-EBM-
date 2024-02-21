@@ -111,18 +111,63 @@ print(tree_rules)
 
 # In[ ]:
 
+import pandas as pd
+import pandas as pd
+from interpret.glassbox import ExplainableBoostingClassifier
+from interpret import show
 
+# Generate synthetic data
+from sklearn.datasets import make_classification
 
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=2, random_state=42)
+flight_data = pd.DataFrame(X, columns=[f"selected_features{i}" for i in range(1, 11)])
+flight_data['DELAY_TARGET'] = y
+
+# Split the data into features (X) and target variable (y)
+X = flight_data.drop('DELAY_TARGET', axis=1)
+y = flight_data['DELAY_TARGET']
+
+# Train an EBM model
+ebm_model = ExplainableBoostingClassifier(random_state=42)
+ebm_model.fit(X, y)
+
+# Explain global behavior
+ebm_global_explanation = ebm_model.explain_global()
+
+# Visualize the global explanation
+show(ebm_global_explanation)
 
 
 # In[ ]:
 
+import pandas as pd
+from interpret.glassbox import ExplainableBoostingClassifier
+from interpret import show
+from interpret.perf import ROC
 
+# Generate synthetic data
+from sklearn.datasets import make_classification
 
+# Generating synthetic data
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=2, random_state=42)
+flight_data = pd.DataFrame(X, columns=[f"selected_features{i}" for i in range(1, 11)])
+flight_data['DELAY_TARGET'] = y
 
+# Split the data into features (X) and target variable (y)
+X = flight_data.drop('DELAY_TARGET', axis=1)
+y = flight_data['DELAY_TARGET']
 
-# In[ ]:
+# Train an EBM model
+ebm_model = ExplainableBoostingClassifier(random_state=42)
+ebm_model.fit(X, y)
 
+# 5. Plot ROC and explain it globally
+roc_curve = ROC(ebm_model.predict_proba).explain_perf(X, y)
+show(roc_curve)
+
+# 6. Explain global feature importance
+global_explanation = ebm_model.explain_global()
+show(global_explanation)
 
 
 
